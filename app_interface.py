@@ -1,6 +1,7 @@
 import tkinter.font                 # -----------------------------------------------
 from tkinter import *               # Библиотеки для написания интерфейса приложения
 from tkinter import ttk             # -----------------------------------------------
+from tkinter import messagebox
 from signal import Signal           # Импортируем из нашего файла класс Signal
 
 
@@ -11,6 +12,7 @@ class SampleApp(Tk):
         Tk.__init__(self, *args, **kwargs)
         self.wm_title("Быстрое преобразование Фурье")   # Заголовок приложения
         self.wm_geometry("500x250")                     # Размер приложения
+        self.eval('tk::PlaceWindow . center')
         self.gen_data = []                              # Общие данные которые вводит пользователь (Время и частота дискритизации)
         self.data = []                                  # Данные каждой волны
         self.max_signal = 0
@@ -63,11 +65,15 @@ class StartPage(Frame):
 
     # Функция которая проверяет корректность введенных данных, сохраняет их и переносит на след страницу
     def submit_data(self):
-        if (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
+        if (self.entry1.get() == '') or (self.entry2.get() == ''):
+            messagebox.showerror("Некорректно введенные данные", "Заполните все поля без пропусков")
+        elif (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
             self.data.append(self.entry1.get())
             self.data.append(self.entry2.get())
             self.controller.gen_data.append(self.data)
             self.controller.show_frame("PageOne")
+        else:
+            messagebox.showerror("Некорректно введенные данные", "Частота дискритизации и продолжительность волн должны быть больше 0")
 
 
 # Класс описывающий страницу для первой волны (в нем почти все тоже самое что и в стартовой странице)
@@ -94,12 +100,16 @@ class PageOne(Frame):
         button.pack()
 
     def submit_data(self):
-        if (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
+        if (self.entry1.get() == '') or (self.entry2.get() == '') or (self.entry3.get() == ''):
+            messagebox.showerror("Некорректно введенные данные", "Заполните все поля без пропусков")
+        elif (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
             self.data.append(self.entry1.get())
             self.data.append(self.entry2.get())
             self.data.append(self.entry3.get())
             self.controller.data.append(self.data)
             self.controller.show_frame("PageTwo")
+        else:
+            messagebox.showerror("Некорректно введенные данные", "Частота и амплитуда должны быть больше 0")
 
 
 # Класс описывающий страницу для второй волны
@@ -125,12 +135,16 @@ class PageTwo(Frame):
         button.pack()
 
     def submit_data(self):
-        if (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
+        if (self.entry1.get() == '') or (self.entry2.get() == '') or (self.entry3.get() == ''):
+            messagebox.showerror("Некорректно введенные данные", "Заполните все поля без пропусков")
+        elif (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
             self.data.append(self.entry1.get())
             self.data.append(self.entry2.get())
             self.data.append(self.entry3.get())
             self.controller.data.append(self.data)
             self.controller.show_frame("PageThree")
+        else:
+            messagebox.showerror("Некорректно введенные данные", "Частота и амплитуда должны быть больше 0")
 
 
 # Класс описывающий страницу для третьей волны
@@ -156,12 +170,16 @@ class PageThree(Frame):
         button.pack()
 
     def submit_data(self):
-        if (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
+        if (self.entry1.get() == '') or (self.entry2.get() == '') or (self.entry3.get() == ''):
+            messagebox.showerror("Некорректно введенные данные", "Заполните все поля без пропусков")
+        elif (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
             self.data.append(self.entry1.get())
             self.data.append(self.entry2.get())
             self.data.append(self.entry3.get())
             self.controller.data.append(self.data)
             self.controller.show_frame("PageFour")
+        else:
+            messagebox.showerror("Некорректно введенные данные", "Частота и амплитуда должны быть больше 0")
 
 
 # Класс описывающий страницу для четвертой волны
@@ -187,12 +205,16 @@ class PageFour(Frame):
         button.pack()
 
     def submit_data(self):
-        if (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
+        if (self.entry1.get() == '') or (self.entry2.get() == '') or (self.entry3.get() == ''):
+            messagebox.showerror("Некорректно введенные данные", "Заполните все поля без пропусков")
+        elif (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
             self.data.append(self.entry1.get())
             self.data.append(self.entry2.get())
             self.data.append(self.entry3.get())
             self.controller.data.append(self.data)
             self.controller.show_frame("PageFive")
+        else:
+            messagebox.showerror("Некорректно введенные данные", "Частота и амплитуда должны быть больше 0")
 
 
 # Класс описывающий страницу для пятой волны
@@ -220,12 +242,16 @@ class PageFive(Frame):
 
     # Функция такая же как и в предыдущих классах только в конце вызывается функция fft
     def submit_data(self):
-        if (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
+        if (self.entry1.get() == '') or (self.entry2.get() == '') or (self.entry3.get() == ''):
+            messagebox.showerror("Некорректно введенные данные", "Заполните все поля без пропусков")
+        elif (int(self.entry1.get()) > 0) & (int(self.entry2.get()) > 0):
             self.data.append(self.entry1.get())
             self.data.append(self.entry2.get())
             self.data.append(self.entry3.get())
             self.controller.data.append(self.data)
             self.fft()
+        else:
+            messagebox.showerror("Некорректно введенные данные", "Частота и амплитуда должны быть больше 0")
 
     # Функция создающая объект класса Signal и передающая ему все данные которые ввел пользователь
     def fft(self):
